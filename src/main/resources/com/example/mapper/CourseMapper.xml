@@ -11,9 +11,4 @@
     <select id="findAll" resultMap="courseMap">
         SELECT * FROM COURSES
     </select>
-
-    <insert id="insert" useGeneratedKeys="true" keyColumn="ID" keyProperty="id">
-        INSERT INTO COURSES (ID, NAME) VALUES (COURSE_ID_SEQ.nextval, #{name})
-    </insert>
-
 </mapper>
