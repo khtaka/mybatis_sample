@@ -7,13 +7,46 @@
         <id column="ID" property="id"/>
         <result column="NAME" property="name"/>
     </resultMap>
+    
+    <resultMap id="BaseResultMap" type="com.example.entity.Course">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="NAME" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <parameterMap id="BaseParameterMap" type="com.example.entity.Course"/>
 
     <select id="findAll" resultMap="courseMap">
-        SELECT * FROM COURSES
+		SELECT
+			*
+		FROM
+			COURSES
+		<where>
+			<if test="courseId != null">
+				ID = #{courseId}
+			</if>
+			<if test="courseName != null">
+				OR NAME = #{courseName}
+			</if>
+		</where>
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyColumn="ID" keyProperty="id">
-        INSERT INTO COURSES (ID, NAME) VALUES (COURSE_ID_SEQ.nextval, #{name})
-    </insert>
+    <insert id="insert" useGeneratedKeys="true" keyColumn="ID" keyProperty="id">
+        <!-- シーケンスの次の値を取得 -->
+        <selectKey keyProperty="id" order="BEFORE" resultType="int">
+            SELECT NEXTVAL('COURSE_ID_SEQ')
+        </selectKey>
+        <!-- データを挿入 -->
+        INSERT INTO COURSES (ID, NAME) VALUES (#{id}, #{name})
+    </insert>
+    
+    <select id="findById" resultMap="courseMap">
+        SELECT * FROM COURSES WHERE ID = #{id}
+    </select>
 
+    <update id="update">
+        UPDATE COURSES SET NAME = #{name} WHERE ID = #{id}
+    </update>
+    <delete id="deleteById">
+		DELETE FROM COURSES WHERE ID = #{id}
+	</delete>
 </mapper>
