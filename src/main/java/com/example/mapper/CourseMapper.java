@@ -8,7 +8,9 @@ import com.example.entity.Course;
 
 @Mapper
 public interface CourseMapper {
-    public List<Course> findAll();
-    
-    public void insert(Course course);
+	public List<Course> findAll();
+
+	public void insert(Course course);
+
+	public List<Course> findById();
 }

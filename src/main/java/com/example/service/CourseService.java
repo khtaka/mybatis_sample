@@ -20,4 +20,7 @@ public class CourseService {
     public List<Course> findAll() {
         return this.courseMapper.findAll();
     }
+    public List<Course> findById() {
+        return this.courseMapper.findById();
+    }
 }
